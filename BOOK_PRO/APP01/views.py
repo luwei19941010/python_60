@@ -59,17 +59,50 @@ def index(request):
 
     #更新
     #一对一 更新
-    models.Author.objects.filter(nid=1).update(
-        name='陆威',
-        age=18,
-        # authorDetail=models.AuthorDetail.objects.get(nid=1),
-        # authorDetail_id=3,
-    )
-    #一对多
-    models.Book.objects.filter(pk=4).update(
-        title='大话2',
-        pulish_id=2,
-
-    )
+    # models.Author.objects.filter(nid=1).update(
+    #     name='陆威',
+    #     age=18,
+    #     # authorDetail=models.AuthorDetail.objects.get(nid=1),
+    #     # authorDetail_id=3,
+    # )
+    # #一对多
+    # models.Book.objects.filter(pk=4).update(
+    #     title='大话2',
+    #     pulish_id=2,
+    #
+    # )
     #没有级联更新 ， 会报错
+    #对象
+    #一对一
+                    # 正向查询：authorobj.authordetail，对象.关联属性名称
+        # author -----------------------------------------------------------> authordetail
+               # <-----------------------------------------------------------
+               #      反向查询：authordetail.author ，对象.小写类名
+
+    #一对多
+                    # 正向查询：book_obj.publishs，对象.关联属性名称
+        # author -----------------------------------------------------------> authordetail
+              # <-----------------------------------------------------------
+              #      反向查询：pulishs_obj.book_set.all() ，对象.小写类名
+
+    #多对多
+                    # 正向查询：book_obj.authors.all()，对象.关联属性名称
+    # author -----------------------------------------------------------> authordetail
+            # <-----------------------------------------------------------
+            #      反向查询：author_obj.book_set.all() ，对象.小写类名
+
+    obj=models.Author.objects.filter(name='陆威').first()
+    print(obj.authorDetail,type(obj.authorDetail))
+    print(obj.authorDetail.telephone)
+
+
+    #双下划线连表，正向表属性，反向表名
+    # obj=models.Author.objects.filter(name='陆威').values('authorDetail__telephone')
+    # obj=models.AuthorDetail.objects.filter(author__name='陆威').values('telephone')
+    # print(obj)
+
+    # from django.db.models import Avg,Max,Min,Sum,Count
+    # obj=models.Book.objects.all().aggregate(a=Avg('price'))
+    # print(obj)
+
     return HttpResponse('OKOKOK')

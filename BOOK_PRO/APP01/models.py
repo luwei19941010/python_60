@@ -6,7 +6,7 @@ class Author(models.Model):#作者表与作者详细信息表一对一关系
     nid=models.AutoField(primary_key=True)
     name=models.CharField(max_length=32)
     age=models.IntegerField()
-    authorDetail=models.OneToOneField(to='AuthorDetail',to_field='nid',on_delete=models.CASCADE)
+    authorDetail=models.OneToOneField(to='AuthorDetail',to_field='nid',on_delete=models.CASCADE)#,related_name='xxx' 反向不需要写表名，直接写xxx
     def __str__(self):
         return self.name
 
